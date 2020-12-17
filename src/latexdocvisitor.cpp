@@ -1381,6 +1381,18 @@ void LatexDocVisitor::visitPost(DocDotFile *df)
   if (m_hide) return;
   endDotFile(df->hasCaption());
 }
+
+void LatexDocVisitor::visitPre(DocDrawioFile *df)
+{
+  if (m_hide) return;
+  startDotFile(df->file(),df->width(),df->height(),df->hasCaption());
+}
+
+void LatexDocVisitor::visitPost(DocDrawioFile *df)
+{
+  if (m_hide) return;
+  endDotFile(df->hasCaption());
+}
 void LatexDocVisitor::visitPre(DocMscFile *df)
 {
   if (m_hide) return;

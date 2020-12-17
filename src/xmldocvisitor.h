@@ -107,6 +107,8 @@ class XmlDocVisitor : public DocVisitor
     void visitPost(DocImage *);
     void visitPre(DocDotFile *);
     void visitPost(DocDotFile *);
+    void visitPre(DocDrawioFile *);
+    void visitPost(DocDrawioFile *);
 
     void visitPre(DocMscFile *);
     void visitPost(DocMscFile *);

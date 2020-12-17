@@ -107,6 +107,7 @@ class Doxygen
     static FileNameLinkedMap        *inputNameLinkedMap;
     static FileNameLinkedMap        *imageNameLinkedMap;
     static FileNameLinkedMap        *dotFileNameLinkedMap;
+    static FileNameLinkedMap        *drawioFileNameLinkedMap;
     static FileNameLinkedMap        *mscFileNameLinkedMap;
     static FileNameLinkedMap        *diaFileNameLinkedMap;
     static MemberNameLinkedMap      *memberNameLinkedMap;

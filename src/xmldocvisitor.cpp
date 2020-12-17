@@ -948,6 +948,18 @@ void XmlDocVisitor::visitPost(DocDotFile *)
   visitPostEnd(m_t, "dotfile");
 }
 
+void XmlDocVisitor::visitPre(DocDrawioFile *df)
+{
+  if (m_hide) return;
+  visitPreStart(m_t, "drawiofile", FALSE, this, df->children(), df->file(), FALSE, DocImage::Html, df->width(), df->height());
+}
+
+void XmlDocVisitor::visitPost(DocDrawioFile *)
+{
+  if (m_hide) return;
+  visitPostEnd(m_t, "drwawiofile");
+}
+
 void XmlDocVisitor::visitPre(DocMscFile *df)
 {
   if (m_hide) return;

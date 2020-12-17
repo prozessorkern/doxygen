@@ -132,6 +132,7 @@ FileNameLinkedMap    *Doxygen::includeNameLinkedMap = 0;     // include names
 FileNameLinkedMap    *Doxygen::exampleNameLinkedMap = 0;     // examples
 FileNameLinkedMap    *Doxygen::imageNameLinkedMap = 0;       // images
 FileNameLinkedMap    *Doxygen::dotFileNameLinkedMap = 0;     // dot files
+FileNameLinkedMap    *Doxygen::drawioFileNameLinkedMap = 0;  // drawio files
 FileNameLinkedMap    *Doxygen::mscFileNameLinkedMap = 0;     // msc files
 FileNameLinkedMap    *Doxygen::diaFileNameLinkedMap = 0;     // dia files
 StringUnorderedMap    Doxygen::namespaceAliasMap;      // all namespace aliases
@@ -190,6 +191,7 @@ void clearAll()
   Doxygen::exampleNameLinkedMap->clear();
   Doxygen::imageNameLinkedMap->clear();
   Doxygen::dotFileNameLinkedMap->clear();
+  Doxygen::drawioFileNameLinkedMap->clear();
   Doxygen::mscFileNameLinkedMap->clear();
   Doxygen::diaFileNameLinkedMap->clear();
   Doxygen::tagDestinationDict.clear();
@@ -10095,6 +10097,7 @@ void initDoxygen()
   Doxygen::exampleNameLinkedMap = 0;
   Doxygen::imageNameLinkedMap   = 0;
   Doxygen::dotFileNameLinkedMap = 0;
+  Doxygen::drawioFileNameLinkedMap = 0;
   Doxygen::mscFileNameLinkedMap = 0;
   Doxygen::diaFileNameLinkedMap = 0;
 
@@ -10123,6 +10126,7 @@ void cleanUpDoxygen()
   delete Doxygen::exampleNameLinkedMap;
   delete Doxygen::imageNameLinkedMap;
   delete Doxygen::dotFileNameLinkedMap;
+  delete Doxygen::drawioFileNameLinkedMap;
   delete Doxygen::mscFileNameLinkedMap;
   delete Doxygen::diaFileNameLinkedMap;
   delete Doxygen::mainPage;
@@ -10557,6 +10561,7 @@ void adjustConfiguration()
   Doxygen::exampleNameLinkedMap = new FileNameLinkedMap;
   Doxygen::imageNameLinkedMap = new FileNameLinkedMap;
   Doxygen::dotFileNameLinkedMap = new FileNameLinkedMap;
+  Doxygen::drawioFileNameLinkedMap = new FileNameLinkedMap;
   Doxygen::mscFileNameLinkedMap = new FileNameLinkedMap;
   Doxygen::diaFileNameLinkedMap = new FileNameLinkedMap;
 
@@ -10884,6 +10889,24 @@ void searchInputFiles()
                         alwaysRecursive,                // recursive
                         TRUE,                           // errorIfNotExist
                         &killSet);                      // killSet
+  }
+  g_s.end();
+
+  g_s.begin("Searching for drawio files...\n");
+  killSet.clear();
+  const StringVector &drawioFileList=Config_getList(DOTFILE_DIRS); //TODO DRAWIO_DIRS
+  for (const auto &s : drawioFileList)
+  {
+    readFileOrDirectory(s.c_str(),                        // s
+                        Doxygen::drawioFileNameLinkedMap, // fnDict
+                        0,                                // exclSet
+                        0,                                // patList
+                        0,                                // exclPatList
+                        0,                                // resultList
+                        0,                                // resultSet
+                        alwaysRecursive,                  // recursive
+                        TRUE,                             // errorIfNotExist
+                        &killSet);                        // killSet
   }
   g_s.end();
 

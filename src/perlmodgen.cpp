@@ -366,6 +366,8 @@ public:
   void visitPost(DocImage *);
   void visitPre(DocDotFile *);
   void visitPost(DocDotFile *);
+  void visitPre(DocDrawioFile *);
+  void visitPost(DocDrawioFile *);
   void visitPre(DocMscFile *);
   void visitPost(DocMscFile *);
   void visitPre(DocDiaFile *);
@@ -1165,6 +1167,20 @@ void PerlModDocVisitor::visitPre(DocDotFile *)
 }
 
 void PerlModDocVisitor::visitPost(DocDotFile *)
+{
+#if 0
+  m_output.add("</dotfile>");
+#endif
+}
+
+void PerlModDocVisitor::visitPre(DocDrawioFile *)
+{
+#if 0
+  m_output.add("<dotfile name=\""); m_output.add(df->file()); m_output.add("\">");
+#endif
+}
+
+void PerlModDocVisitor::visitPost(DocDrawioFile *)
 {
 #if 0
   m_output.add("</dotfile>");

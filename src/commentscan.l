@@ -278,6 +278,7 @@ static const std::map< std::string, DocCmdMap > docCmdMap =
   { "snippet",         { 0,                       CommandSpacing::Block     }},
   { "snippetlineno",   { 0,                       CommandSpacing::Block     }},
   { "startuml",        { &handleFormatBlock,      CommandSpacing::Block     }},
+  { "drawio",          { 0,                       CommandSpacing::Block     }},
   { "static",          { &handleStatic,           CommandSpacing::Invisible }},
   { "struct",          { &handleStruct,           CommandSpacing::Invisible }},
   { "subpage",         { &handleSubpage,          CommandSpacing::Inline    }},

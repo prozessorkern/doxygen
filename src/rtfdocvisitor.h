@@ -106,6 +106,8 @@ class RTFDocVisitor : public DocVisitor
     void visitPost(DocImage *);
     void visitPre(DocDotFile *);
     void visitPost(DocDotFile *);
+    void visitPre(DocDrawioFile *);
+    void visitPost(DocDrawioFile *);
     void visitPre(DocMscFile *);
     void visitPost(DocMscFile *);
     void visitPre(DocDiaFile *);
@@ -155,6 +157,8 @@ class RTFDocVisitor : public DocVisitor
     void includePicturePostRTF(bool isTypeRTF, bool hasCaption, bool inlineImage = FALSE);
     void writeDotFile(const QCString &fileName, bool hasCaption);
     void writeDotFile(DocDotFile *);
+    void writeDrawioFile(const QCString &fileName, bool hasCaption);
+    void writeDrawioFile(DocDrawioFile *);
     void writeMscFile(const QCString &fileName, bool hasCaption);
     void writeMscFile(DocMscFile *);
     void writeDiaFile(DocDiaFile *);

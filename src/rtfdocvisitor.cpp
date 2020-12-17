@@ -1263,6 +1263,17 @@ void RTFDocVisitor::visitPost(DocDotFile *df)
   DBG_RTF("{\\comment RTFDocVisitor::visitPost(DocDotFile)}\n");
   includePicturePostRTF(true, df->hasCaption());
 }
+void RTFDocVisitor::visitPre(DocDrawioFile *df)
+{
+  DBG_RTF("{\\comment RTFDocVisitor::visitPre(DocDrawioFile)}\n");
+  writeDrawioFile(df);
+}
+
+void RTFDocVisitor::visitPost(DocDrawioFile *df)
+{
+  DBG_RTF("{\\comment RTFDocVisitor::visitPost(DocDrawioFile)}\n");
+  includePicturePostRTF(true, df->hasCaption());
+}
 void RTFDocVisitor::visitPre(DocMscFile *df)
 {
   DBG_RTF("{\\comment RTFDocVisitor::visitPre(DocMscFile)}\n");
@@ -1840,12 +1851,28 @@ void RTFDocVisitor::popEnabled()
   m_hide = *v;
   delete v;
 }
-
 void RTFDocVisitor::writeDotFile(DocDotFile *df)
 {
   writeDotFile(df->file(), df->hasCaption());
 }
 void RTFDocVisitor::writeDotFile(const QCString &filename, bool hasCaption)
+{
+  QCString baseName=filename;
+  int i;
+  if ((i=baseName.findRev('/'))!=-1)
+  {
+    baseName=baseName.right(baseName.length()-i-1);
+  }
+  QCString outDir = Config_getString(RTF_OUTPUT);
+  writeDotGraphFromFile(filename,outDir,baseName,GOF_BITMAP);
+  QCString imgExt = getDotImageExtension();
+  includePicturePreRTF(baseName + "." + imgExt, true, hasCaption);
+}
+void RTFDocVisitor::writeDrawioFile(DocDrawioFile *df)
+{
+  writeDrawioFile(df->file(), df->hasCaption());
+}
+void RTFDocVisitor::writeDrawioFile(const QCString &filename, bool hasCaption)
 {
   QCString baseName=filename;
   int i;

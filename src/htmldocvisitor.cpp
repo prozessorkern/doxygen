@@ -1840,6 +1840,27 @@ void HtmlDocVisitor::visitPost(DocDotFile *df)
   m_t << "</div>" << endl;
 }
 
+void HtmlDocVisitor::visitPre(DocDrawioFile *df)
+{
+  if (m_hide) return;
+  m_t << "<div class=\"drawiograph\">" << endl;
+  writeDrawioFile(df->file(),df->relPath(),df->context());
+  if (df->hasCaption())
+  {
+    m_t << "<div class=\"caption\">" << endl;
+  }
+}
+
+void HtmlDocVisitor::visitPost(DocDrawioFile *df)
+{
+  if (m_hide) return;
+  if (df->hasCaption())
+  {
+    m_t << "</div>" << endl;
+  }
+  m_t << "</div>" << endl;
+}
+
 void HtmlDocVisitor::visitPre(DocMscFile *df)
 {
   if (m_hide) return;
@@ -2338,6 +2359,26 @@ void HtmlDocVisitor::writeDotFile(const QCString &fn,const QCString &relPath,
   QCString outDir = Config_getString(HTML_OUTPUT);
   writeDotGraphFromFile(fn,outDir,baseName,GOF_BITMAP);
   writeDotImageMapFromFile(m_t,fn,outDir,relPath,baseName,context);
+}
+
+void HtmlDocVisitor::writeDrawioFile(const QCString &fn,const QCString &relPath,
+                                     const QCString &context)
+{
+  QCString baseName=fn;
+  int i;
+  if ((i=baseName.findRev('/'))!=-1)
+  {
+    baseName=baseName.right(baseName.length()-i-1);
+  }
+  if ((i=baseName.find('.'))!=-1) // strip extension
+  {
+    baseName=baseName.left(i);
+  }
+  baseName.prepend("dot_");
+  //QCString outDir = Config_getString(HTML_OUTPUT);
+  //writeDotGraphFromFile(fn,outDir,baseName,GOF_BITMAP);
+  //writeDotImageMapFromFile(m_t,fn,outDir,relPath,baseName,context);
+  m_t << "blubb";
 }
 
 void HtmlDocVisitor::writeMscFile(const QCString &fileName,

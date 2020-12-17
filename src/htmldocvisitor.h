@@ -107,6 +107,8 @@ class HtmlDocVisitor : public DocVisitor
     void visitPost(DocImage *);
     void visitPre(DocDotFile *);
     void visitPost(DocDotFile *);
+    void visitPre(DocDrawioFile *);
+    void visitPost(DocDrawioFile *);
     void visitPre(DocMscFile *);
     void visitPost(DocMscFile *);
     void visitPre(DocDiaFile *);
@@ -150,6 +152,7 @@ class HtmlDocVisitor : public DocVisitor
                    const QCString &tooltip = "");
     void endLink();
     void writeDotFile(const QCString &fileName,const QCString &relPath,const QCString &context);
+    void writeDrawioFile(const QCString &fileName,const QCString &relPath,const QCString &context);
     void writeMscFile(const QCString &fileName,const QCString &relPath,const QCString &context);
     void writeDiaFile(const QCString &fileName,const QCString &relPath,const QCString &context);
     void writePlantUMLFile(const QCString &fileName,const QCString &relPath,const QCString &context);

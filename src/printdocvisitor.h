@@ -544,6 +544,16 @@ class PrintDocVisitor : public DocVisitor
       indent_post();
       printf("</dotfile>\n");
     }
+    void visitPre(DocDrawioFile *df)
+    {
+      indent_pre();
+      printf("<drawiofile src=\"%s\">\n",df->name().data());
+    }
+    void visitPost(DocDrawioFile *) 
+    {
+      indent_post();
+      printf("</drawiofile>\n");
+    }
     void visitPre(DocMscFile *df)
     {
       indent_pre();

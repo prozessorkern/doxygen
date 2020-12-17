@@ -837,6 +837,29 @@ class DocDotFile : public CompAccept<DocDotFile>
     QCString  m_context;
 };
 
+/** Node representing a drawio file */
+class DocDrawioFile : public CompAccept<DocDrawioFile>
+{
+  public:
+    DocDrawioFile(DocNode *parent,const QCString &name,const QCString &context);
+    bool parse();
+    Kind kind() const          { return Kind_DotFile; }
+    QCString name() const       { return m_name; }
+    QCString file() const       { return m_file; }
+    QCString relPath() const    { return m_relPath; }
+    bool hasCaption() const    { return !m_children.isEmpty(); }
+    QCString width() const      { return m_width; }
+    QCString height() const     { return m_height; }
+    QCString context() const    { return m_context; }
+  private:
+    QCString  m_name;
+    QCString  m_file;
+    QCString  m_relPath;
+    QCString  m_width;
+    QCString  m_height;
+    QCString  m_context;
+};
+
 /** Node representing a msc file */
 class DocMscFile : public CompAccept<DocMscFile>
 {

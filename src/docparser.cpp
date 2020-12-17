@@ -2773,6 +2773,43 @@ bool DocDotFile::parse()
   return ok;
 }
 
+DocDrawioFile::DocDrawioFile(DocNode *parent,const QCString &name,const QCString &context) :
+      m_name(name), m_relPath(g_relPath), m_context(context)
+{
+  m_parent = parent;
+}
+
+bool DocDrawioFile::parse()
+{
+  bool ok = false;
+  defaultHandleTitleAndSize(CMD_DRAWIO,this,m_children,m_width,m_height);
+
+  bool ambig;
+  FileDef *fd = findFileDef(Doxygen::drawioFileNameLinkedMap,m_name,ambig);
+  if (fd==0 && m_name.right(7)!=".drawio") // try with .drawio extension as well
+  {
+    fd = findFileDef(Doxygen::drawioFileNameLinkedMap,m_name+".drawio",ambig);
+  }
+  if (fd)
+  {
+    m_file = fd->absFilePath();
+    ok = true;
+    if (ambig)
+    {
+      warn_doc_error(g_fileName,getDoctokinizerLineNr(),"included drawio file name %s is ambiguous.\n"
+           "Possible candidates:\n%s",qPrint(m_name),
+           qPrint(showFileDefMatches(Doxygen::drawioFileNameLinkedMap,m_name))
+          );
+    }
+  }
+  else
+  {
+    warn_doc_error(g_fileName,getDoctokinizerLineNr(),"included drawio file %s is not found "
+           "in any of the paths specified via DRAWIO_DIRS!",qPrint(m_name));
+  }
+  return ok;
+}
+
 DocMscFile::DocMscFile(DocNode *parent,const QCString &name,const QCString &context) :
       m_name(name), m_relPath(g_relPath), m_context(context)
 {
@@ -5866,6 +5903,9 @@ int DocPara::handleCommand(const QCString &cmdName, const int tok)
       break;
     case CMD_INHERITDOC:
       handleInheritDoc();
+      break;
+    case CMD_DRAWIO:
+      handleFile<DocDrawioFile>(cmdName);
       break;
     default:
       // we should not get here!

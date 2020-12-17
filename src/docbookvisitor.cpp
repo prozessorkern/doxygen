@@ -1267,6 +1267,20 @@ DB_VIS_C
   endDotFile(df->hasCaption());
 }
 
+void DocbookDocVisitor::visitPre(DocDrawioFile *df)
+{
+DB_VIS_C
+  if (m_hide) return;
+  startDotFile(df->file(),df->width(),df->height(),df->hasCaption(),df->children());
+}
+
+void DocbookDocVisitor::visitPost(DocDrawioFile *df)
+{
+DB_VIS_C
+  if (m_hide) return;
+  endDotFile(df->hasCaption());
+}
+
 void DocbookDocVisitor::visitPre(DocMscFile *df)
 {
 DB_VIS_C
